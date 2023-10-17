@@ -1,4 +1,5 @@
-# Welcome to our Book Store project, a web application developed using HTML, CSS, Bootstrap, JavaScript, and PHP, with MySQL as the database.
+# Book Store
+Welcome to our Book Store project, a web application developed using HTML, CSS, Bootstrap, JavaScript, and PHP, with MySQL as the database.
 
 Pages Overview
 Home Page: The landing page provides an introduction to the Book Store and showcases featured books.
