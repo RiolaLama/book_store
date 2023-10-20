@@ -9,8 +9,6 @@ $result = mysqli_query($connect, $sql);
 $user = mysqli_fetch_assoc($result);
 $userId = $_SESSION[$userType];
 
-
-
 $tbody = '';
 $total = 0;
 $totalCart = 0;
@@ -38,26 +36,27 @@ if (mysqli_num_rows($res0) > 0) {
                     </div>
                 </th>
                 <td class='align-middle'>
-                    <p class='mb-0' style='font-weight: 500;'>Digital</p>
-                </td>
-                <td class='align-middle'>
-                <p class='mb-0' style='font-weight: 500;' data-price='{$row['price']}'>$ {$row['price']}</p>
-                </td>
-                <td class='align-middle'>
                     <div class='d-flex flex-row'>
                         <button class='btn btn-link px-2 minusBtn' data-bookid='{$row['book_id']}'>
                         <i class='fas fa-minus'></i>
                         </button>
-                        <input id='qtyValue' min='0' name='quantity' value='{$row['quantity']}' type='number' class='form-control form-control-sm qtyValue' style='width: 50px;' />
+                        <input id='qtyValue' min='0' name='quantity' value='{$row['quantity']}' type='text' class='form-control form-control-sm qtyValue text-center' style='width: 50px;' />
                         <button class='btn btn-link px-2 plusBtn' data-bookid='{$row['book_id']}'>
                             <i class='fas fa-plus'></i>
                         </button>
                     </div>
+                </td>   
+                <td class='align-middle'>
+                    <p class='mb-0' style='font-weight: 500;' data-price='{$row['price']}'>$ {$row['price']}</p>
                 </td>
                
                 <td class='align-middle'>
                 <p class='mb-0 total' style='font-weight: 500;' data-price='{$row['price']}'> $ $itemTotal</p>
                 </td>
+                <td class='text-center align-middle'>
+                    <button class='btn text-danger remove-item' data-bookid='{$row['book_id']}'><i class='fa fa-trash'></i></button>
+                </td>
+
             </tr>
     ";
     }
@@ -89,24 +88,29 @@ if (mysqli_num_rows($res0) > 0) {
         <div class="container h-100 py-5">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col">
-
                     <div class="table-responsive">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th scope="col" class="h5">Shopping Bag</th>
-                                    <th scope="col">Format</th>
-                                    <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">Subtotal</th>
+                                    <th class="text-center"><button id="clearCartBtn" class="btn btn-sm btn-outline-danger">Clear Cart</a></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?= $tbody ?>
                             </tbody>
                         </table>
-                        <div class='text-end'>
-                            <p class='fw-bold mb-0' id='totalCart'>TOTAL: $<?= $totalCart ?> </p>
+                        <div class="text-end mt-4">
+                            <label class="text-muted font-weight-normal m-0">Total price</label>
+                            <div class="text-large" id='totalCart'><strong>$<?= $totalCart ?></strong></div>
+                        </div>
+                        <hr>
+                        <div class="float-end">
+                            <a href='books.php' class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</a>
+                            <button type="button" class="btn btn-lg btn-primary mt-2">Checkout</button>
                         </div>
                     </div>
                 </div>

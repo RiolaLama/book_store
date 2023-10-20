@@ -8,7 +8,7 @@ $title = "Books";
 // $user = mysqli_fetch_assoc($result);
 // $userId = $_SESSION[$userType];
 
-// require_once 'actions/add_to_card.php';
+// require_once 'actions/add_to_cart.php';
 
 
 $result = getAll('book');
@@ -27,7 +27,7 @@ if (mysqli_num_rows($result)  > 0) {
                     </div>
                     <div class='store-overlay'>
                         <a href='details.php?id={$row['id']}' class='btn btn-primary rounded-pill py-2 px-4 m-2'>More Detail <i class='fa fa-arrow-right ms-2'></i></a>
-                        <form method='POST' class='addCard' action='actions/add_to_card.php'>
+                        <form method='POST' class='addCard' action='actions/add_to_cart.php'>
                             <input type='text' hidden name='id' value='{$row['id']}'>
                             <button type='submit' name='submit' href='books.php?id={$row['id']}' class='btn btn-dark rounded-pill py-2 px-4 m-2'>Add to Cart <i class='fa fa-cart-plus ms-2'></i></button>
                         </form>

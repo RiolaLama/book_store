@@ -73,7 +73,7 @@ if (mysqli_num_rows($result)  > 0) {
                             <input type="number" class="form-control text-center w-100" value="1">
                         </div> -->
 
-                        <form method='POST' class='addCard' action='actions/add_to_card.php'>
+                        <form method='POST' class='addCard' action='actions/add_to_cart.php'>
                             <div class="col-lg-5 mt-3">
                                 <input type='text' hidden name='id' value='<?= $row['id'] ?>'>
                                 <button name="submit" class="btn btn-dark rounded-pill py-2 px-4 m-2 w-100 " type='submit'>Add To Cart <i class='fa fa-cart-plus ms-2'></i></button>

@@ -78,7 +78,7 @@
                el: ".swiper-pagination",
            },
        });
-       // AJAX - Upload picture
+       //Upload picture
        function uploadPic() {
            let formData = new FormData();
            formData.append('picture', fileInput.files[0]);
@@ -87,7 +87,7 @@
            xhr.open('POST', '../change-img.php');
            xhr.onload = function() {
                if (xhr.status === 200) {
-                   console.log(this.responseText);
+                //    console.log(this.responseText);
                    let response = JSON.parse(this.responseText);
                    imageElement.src = '../' + response.url;
                }
@@ -99,7 +99,7 @@
        if (fileInput) {
            fileInput.addEventListener('change', uploadPic);
        }
-       //    Add to cart
+       // Add to cart
        let minusBtn = document.getElementsByClassName('minusBtn')
        let plusBtn = document.getElementsByClassName('plusBtn')
        let quantityInput = document.getElementsByClassName('qtyValue')
@@ -132,6 +132,7 @@
            if (quantity === 0) {
                total[index].closest('tr').remove();
                deleteItemFromCart(bookId);
+               updateTotalCart();
            } else {
                let xhttp = new XMLHttpRequest();
                let data = `bookId=${bookId}&quantity=${quantity}`;
@@ -179,7 +180,48 @@
                const itemTotal = parseFloat(total[i].innerText.substring(2));
                totalCart += itemTotal;
            }
-           totalCartElement.innerHTML = `TOTAL: $ ${totalCart.toFixed(2)}`;
+           totalCartElement.innerHTML = `<strong>$${totalCart.toFixed(2)}</strong>`;
+
+       }
+
+
+       let removeButtons = document.querySelectorAll('.remove-item');
+       // Remove item from cart
+       removeButtons.forEach(button => {
+           button.addEventListener('click', function() {
+               const bookId = button.getAttribute('data-bookid');
+               let xhttp = new XMLHttpRequest();
+               let data = `bookId=${bookId}`;
+               xhttp.onload = function() {
+                   if (this.status == 200) {
+                       button.closest('tr').remove();
+                       updateTotalCart();
+                   } else {
+                       console.log("Error removing item from the shopping cart");
+                   }
+               };
+               xhttp.open("POST", "actions/delete_item.php");
+               xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               xhttp.send(data);
+           });
+       });
+       // Clear cart
+       const clearCartBtn = document.getElementById('clearCartBtn');
+       if (clearCartBtn) {
+           clearCartBtn.addEventListener('click', function() {
+               let xhttp = new XMLHttpRequest();
+               xhttp.onload = function() {
+                   if (this.status == 200) {
+                       document.querySelector('tbody').innerHTML = "";
+                       updateTotalCart();
+                   } else {
+                       console.log("Error clearing the shopping cart");
+                   }
+               };
+               xhttp.open("POST", "actions/clear_cart.php");
+               xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+               xhttp.send();
+           });
        }
    </script>
    </body>
