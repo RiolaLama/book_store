@@ -3,15 +3,7 @@ include 'controllers/user-controller.php';
 $currentPage = 'show-books';
 $title = "Books";
 
-// $sql = "SELECT * FROM users WHERE id = {$_SESSION[$userType]}";
-// $result = mysqli_query($connect, $sql);
-// $user = mysqli_fetch_assoc($result);
-// $userId = $_SESSION[$userType];
-
-// require_once 'actions/add_to_cart.php';
-
-
-$result = getAll('book');
+$result = getAllBooksWithAuthors();
 $tbody = '';
 if (mysqli_num_rows($result)  > 0) {
     foreach ($result as $row) {
@@ -23,7 +15,7 @@ if (mysqli_num_rows($result)  > 0) {
                         <h4 class='mb-3'>{$row['title']}</h4>
                         <p>{$row['short_description']}</p>
                         <p>$ {$row['price']}</p>
-                        <h4 class='text-primary'>Author: {$row['author_first_name']} {$row['author_last_name']} </h4>
+                        <h4 class='text-primary'>Author: {$row['first_name']} {$row['last_name']} </h4>
                     </div>
                     <div class='store-overlay'>
                         <a href='details.php?id={$row['id']}' class='btn btn-primary rounded-pill py-2 px-4 m-2'>More Detail <i class='fa fa-arrow-right ms-2'></i></a>

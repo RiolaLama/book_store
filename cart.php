@@ -16,7 +16,12 @@ $query0 = "SELECT * FROM shopping_cart WHERE user_id = $userId";
 $res0 = mysqli_query($connect, $query0);
 if (mysqli_num_rows($res0) > 0) {
 
-    $query = "SELECT * FROM shopping_cart JOIN book ON shopping_cart.book_id = book.id WHERE user_id = $userId";
+    $query = "SELECT * FROM shopping_cart 
+          JOIN book ON shopping_cart.book_id = book.id
+          LEFT JOIN books_authors ON book.id = books_authors.book_id
+          LEFT JOIN authors ON books_authors.author_id = authors.id
+          WHERE shopping_cart.user_id = $userId
+          GROUP BY book.id";
     $result2 = mysqli_query($connect, $query);
 
     while ($row = mysqli_fetch_array($result2, MYSQLI_ASSOC)) {
@@ -31,7 +36,7 @@ if (mysqli_num_rows($res0) > 0) {
                         <img src='assets/img/{$row['image']}' class='img-fluid rounded-3' style='width: 120px;' alt='Book'>
                         <div class='flex-column ms-4'>
                             <p class='mb-2'>{$row['title']}</p>
-                            <p class='mb-0'> {$row['author_first_name']} {$row['author_last_name']} </p>
+                            <p class='mb-0'> {$row['first_name']} {$row['last_name']} </p>
                         </div>
                     </div>
                 </th>
@@ -110,7 +115,7 @@ if (mysqli_num_rows($res0) > 0) {
                         <hr>
                         <div class="float-end">
                             <a href='books.php' class="btn btn-lg btn-default md-btn-flat mt-2 mr-3">Back to shopping</a>
-                            <button type="button" class="btn btn-lg btn-primary mt-2">Checkout</button>
+                            <a href="order.php" class="btn btn-lg btn-primary mt-2">Checkout</a>
                         </div>
                     </div>
                 </div>

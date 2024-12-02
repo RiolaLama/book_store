@@ -19,7 +19,7 @@ if (isset($_POST['add-genre'])) {
 } else if (isset($_POST['update-genre'])) {
     $id = $_POST['id'];
     $name = $_POST['name'];
-    $description = $_POST['description'];
+    $description = mysqli_real_escape_string($connect, $_POST['description']);
     $status = isset($_POST["status"]) ? $_POST["status"] : null;
     $popular = isset($_POST['popular']) ? '1' : '0';
     $uploadError = '';

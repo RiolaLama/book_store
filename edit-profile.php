@@ -3,26 +3,21 @@ include 'controllers/user-controller.php';
 $currentPage = 'edit-profile';
 $title = "Edit Profile";
 
-
-$sql = "SELECT * FROM users JOIN address_code  ON users.address_code_id = address_code.id WHERE users.id = {$_SESSION[$userType]}";
-$result = mysqli_query($connect, $sql);
-$user = mysqli_fetch_assoc($result);
+$user = getUserProfile($_SESSION[$userType]);
 
 if (isset($_POST["edit-profile"])) {
-    $id = $_POST['id'];
-    $f_name = $_POST['first_name'];
-    $l_name = $_POST['last_name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $birth_date = $_POST['birth_date'];
-    $status = $_POST['status'];
-    $city = $_POST['city'];
-    $street = $_POST['street'];
-    $state = $_POST['state'];
-    $zip_code = $_POST['zip_code'];
+    $id = cleanInput($_POST['id']);
+    $f_name = cleanInput($_POST['first_name']);
+    $l_name = cleanInput($_POST['last_name']);
+    $email = cleanInput($_POST['email']);
+    $password = empty($_POST['password']) ? $user['password'] : hash("sha256", cleanInput($_POST['password']));
+    $birth_date = cleanInput($_POST['birth_date']);
+    $status = cleanInput($_POST['status']);
+    $city = cleanInput($_POST['city']);
+    $street = cleanInput($_POST['street']);
+    $state = cleanInput($_POST['state']);
+    $zip_code = cleanInput($_POST['zip_code']);
     $picture = file_upload($_FILES['picture'], 'edit-profile');
-
-    $password = hash("sha256", $password);
 
 
     if ($picture->error === 0) {
@@ -58,7 +53,7 @@ if (isset($_POST["edit-profile"])) {
 </div>
 <!-- Page Header End -->
 <div class="container">
-    <form action="" method="post" id='form' enctype="multipart/form-data">
+    <form method="post" id='form' enctype="multipart/form-data">
         <div class="row gutters mx-3 my-5">
             <div class="col-xl-3 col-lg-4 col-md-11 col-12 mx-auto my-3 my-lg-0 ">
                 <div class="card h-100">
@@ -66,7 +61,7 @@ if (isset($_POST["edit-profile"])) {
                         <div class="account-settings">
                             <div class="user-profile">
                                 <div class="img-container mx-auto my-3 px-3">
-                                    <img src='assets/img/<?= $user['profile_picture'] ?>' class='img-thumbnail img-fluid' alt="<?= $user['first_name'] ?>" name='picture-placeholder' id='picture-placeholder'>
+                                    <img src='../../assets/img/<?= $user['profile_picture'] ?>' class='img-thumbnail img-fluid' alt="<?= $user['first_name'] ?>" name='picture-placeholder' id='picture-placeholder'>
                                 </div>
                                 <h5 class="user-name"><?= $user['first_name'] . ' ' . $user['last_name'] ?></h5>
                                 <h6 class="user-email"><?= $user['email'] ?></h6>
@@ -119,6 +114,20 @@ if (isset($_POST["edit-profile"])) {
                                     <input type="date" class="form-control" name="birth_date" value="<?= $user['birth_date'] ?>">
                                 </div>
                             </div>
+                            <?php
+                            if ($user['user_type'] === 'admin') { ?>
+                                <div class="col-sm-6 mt-3">
+                                    <div class="form-group">
+                                        <label for="status">Status</label>
+                                        <select id="status" class="form-control" name="status">
+                                            <option value="user" <?= ($user['user_type'] === 'user') ? 'selected' : '' ?>>User</option>
+                                            <option value="admin" <?= ($user['user_type'] === 'admin') ? 'selected' : '' ?>>Admin</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            <?php }
+                            ?>
+
                         </div>
                         <div class="row gutters">
                             <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
@@ -165,5 +174,6 @@ if (isset($_POST["edit-profile"])) {
         </div>
     </form>
 </div>
+
 
 <?php include('components/footer.php') ?>

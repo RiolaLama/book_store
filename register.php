@@ -10,23 +10,8 @@ if (isset($_SESSION["user"])) {
 if (isset($_SESSION["admin"])) {
     header("Location: admin/dashboard.php");
 }
-function redirect($url, $message, $type = 'success')
-{
 
-    $_SESSION['message'] = $message;
-    $_SESSION['type'] = $type;
-    header("Location: " . $url);
-    exit();
-}
 $fnameError = $lnameError = $emailError = $passError = $confirmPassError = $dateError = $genderError = $stateError = $cityError = $streetError = $zipError = $roleError = $first_name = $last_name = $email =  $street_address = $city = $zip_code = $state = $gender = $userType = $picture = "";
-function cleanInput($param)
-{
-    $clean = trim($param);
-    $clean = strip_tags($clean);
-    $clean = htmlspecialchars($clean);
-
-    return $clean;
-}
 
 $formSubmitted = false;
 if (isset($_POST["register"])) {
@@ -151,13 +136,13 @@ if (isset($_POST["register"])) {
 </head>
 
 <body>
-<div id="tsparticles"></div>
-    <div class='main-container container mt-5'>
+    <div id="tsparticles"></div>
+    <div class='main-container container mt-4'>
         <section class="text-center text-lg-start h-100 ">
             <div class="main-container container  py-5 h-100">
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-lg-6 mb-5 mb-lg-0">
-                        <div class="card-body p-5 shadow-5 text-center card-registration my-4">
+                        <div class="card-body p-4 shadow-5 text-center card-registration my-4">
                             <h2 class="fw-bold mb-5">Sign up now</h2>
                             <form class="" method="POST" id="reg-form" action="<?= htmlspecialchars($_SERVER['SCRIPT_NAME']) ?>" enctype="multipart/form-data">
                                 <div class="row">

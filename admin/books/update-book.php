@@ -1,12 +1,13 @@
 <?php
 
 include('../middlewares/admin-middleware.php');
+
 $currentPage = 'update-book';
 $title = 'Edit Book';
 
 
 if ($_GET['id']) {
-    $id = $_GET['id'];
+    $id = isset($_GET['id']) ? (int)$_GET['id'] : 0; // Sanitize the input
     $result = getById('book', $id);
 
 
@@ -17,11 +18,12 @@ if ($_GET['id']) {
         $picture = $data['image'];
         $isbn_code = $data['ISBN_code'];
         $short_description = $data['short_description'];
-        $author_first_name = $data['author_first_name'];
-        $author_last_name = $data['author_last_name'];
-        $publisher_name = $data['publisher_name'];
-        $publisher_address = $data['publisher_address'];
-        $publisher_date = $data['publish_date'];
+        $author_first_name = $data['first_name'];
+        $author_last_name = $data['last_name'];
+        $author_email = $data['email'];
+        // $publisher_name = $data['publisher_name'];
+        // $publisher_address = $data['publisher_address'];
+        // $publisher_date = $data['publish_date'];
     } else {
         redirect("../show-books.php", "Something went wrong!");
     }
@@ -86,13 +88,17 @@ if ($_GET['id']) {
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label" for="author_name">Author's first name</label>
                                 <input id="author_name" class="form-control" type="text" name="author_first_name" value="<?= $author_first_name ?>" />
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label" for="author_lname">Author's last name</label>
                                 <input id="author_lname" class="form-control" type="text" name="author_last_name" value="<?= $author_last_name ?>" />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="author_email">Author's email</label>
+                                <input id="author_email" class="form-control" type="text" name="author_email" value="<?= $author_email ?>" />
                             </div>
                         </div>
                         <div class="row my-3">
@@ -101,7 +107,7 @@ if ($_GET['id']) {
                                 <textarea rows="4" id="description" class="form-control" name="short_description"><?= $short_description ?></textarea>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label" for="publisher_name">Publisher's name</label>
                                 <input id="publisher_name" class="form-control" type="text" name="publisher_name" value="<?= $publisher_name ?>" />
@@ -114,7 +120,7 @@ if ($_GET['id']) {
                                 <label class="form-label" for="publisher_date">Publisher's date</label>
                                 <input id="publisher_date" class="form-control" type="date" name="publisher_date" value="<?= $publisher_date ?>" />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row my-5">
                             <div class="col-md-4 col-lg-3 col-xl-2 mb-3">
                                 <input type="hidden" name="id" value="<?= $data['id'] ?>" />

@@ -2,14 +2,7 @@
 include('../middlewares/admin-middleware.php');
 
 
-function cleanInput($param)
-{
-    $clean = trim($param);
-    $clean = strip_tags($clean);
-    $clean = htmlspecialchars($clean);
 
-    return $clean;
-}
 
 if (isset($_POST["add-user"])) {
     $error = false;
@@ -118,15 +111,14 @@ if (isset($_POST["add-user"])) {
         } else {
             redirect("add-user.php", "test!");
         }
-    }else{
-        redirect("add-user.php", $errMsg,'danger');
+    } else {
+        redirect("add-user.php", $errMsg, 'danger');
     }
 } elseif (isset($_POST["edit-profile"])) {
     $id = $_POST['id'];
     $f_name = $_POST['first_name'];
     $l_name = $_POST['last_name'];
     $email = $_POST['email'];
-    $password = $_POST['password'];
     $birth_date = $_POST['birth_date'];
     $status = $_POST['status'];
     $city = $_POST['city'];
@@ -134,33 +126,39 @@ if (isset($_POST["add-user"])) {
     $state = $_POST['state'];
     $zip_code = $_POST['zip_code'];
     $picture = file_upload($_FILES['picture'], 'userM');
+    $password = "";
 
-    $password = hash("sha256", $password);
-
-
-    if ($picture->error === 0) {
-        ($_POST["picture"] == "user.jpg") ?: unlink("../../assets/img/$_POST[picture]");
-        $sql = "UPDATE users AS u
-            JOIN address_code AS ac ON u.address_code_id = ac.id
-            SET u.first_name = '$f_name', u.last_name = '$l_name', u.email = '$email', 
-            u.password = '$password', u.birth_date = '$birth_date', u.profile_picture = '$picture->fileName', 
-            u.user_type = '$status', u.street_address = '$street', ac.city = '$city' , ac.zip_code = '$zip_code', 
-            ac.state = '$state'
-            WHERE u.id = $id";
-    } else {
-        $sql = "UPDATE users AS u
-            JOIN address_code AS ac ON u.address_code_id = ac.id
-            SET u.first_name = '$f_name', u.last_name = '$l_name', u.email = '$email', 
-            u.password = '$password', u.birth_date = '$birth_date',
-            u.user_type = '$status', u.street_address = '$street', ac.city = '$city', ac.zip_code = '$zip_code', 
-            ac.state = '$state'
-            WHERE u.id = $id";
+    if (!empty($_POST['password'])) {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
     }
-    if (mysqli_query($connect, $sql) === true) {
+
+    $sql = "UPDATE users AS u
+            JOIN address_code AS ac ON u.address_code_id = ac.id
+            SET u.first_name = ?, u.last_name = ?, u.email = ?, 
+                u.password = IF(LENGTH(?) > 0, ?, u.password), u.birth_date = ?, 
+                u.profile_picture = IF(? != 'user.jpg' AND ? != '', ?, u.profile_picture),
+                u.user_type = ?, u.street_address = ?, ac.city = ?, 
+                ac.zip_code = ?, ac.state = ?
+            WHERE u.id = ?";
+
+    $stmt = $connect->prepare($sql);
+
+    if ($stmt === false) {
+        die("Error preparing statement: " . $connect->error);
+    }
+
+    $stmt->bind_param("ssssssssssssssi", $f_name, $l_name, $email, $password, $password, $birth_date, $picture->fileName, $picture->fileName, $picture->fileName, $status, $street, $city, $zip_code, $state, $id);
+    if ($stmt->execute()) {
+        // If a new picture was uploaded and it's not 'user.jpg', delete the old picture
+        if ($picture->error === 0 && $_POST["picture"] != "user.jpg" && file_exists("../../assets/img/" . $_POST["picture"])) {
+            unlink("../../assets/img/" . $_POST["picture"]);
+        }
         redirect("edit-user.php?id=" . $id, "User updated successfully!");
     } else {
         redirect("edit-user.php?id=" . $id, "Something went wrong!");
     }
+
+    $stmt->close();
 } else if ($_POST["delete-btn"]) {
     $id = $_POST['id'];
     $user = getById('users', $id);
@@ -170,11 +168,11 @@ if (isset($_POST["add-user"])) {
     if ($picture  != "user.jpg") {
         unlink("../../assets/img/$picture");
     }
-   
+
     $sql = "DELETE FROM users WHERE id = {$id}";
     $res = mysqli_query($connect, $sql);
 
-    $sql1 = "DELETE FROM address_code WHERE id = {$addressCodeId }";
+    $sql1 = "DELETE FROM address_code WHERE id = {$addressCodeId}";
     if (mysqli_query($connect, $sql1) === TRUE) {
         echo "Success";
     } else {

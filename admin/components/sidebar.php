@@ -8,7 +8,7 @@
         <a href="<?= $baseUrl ?>books/add-book.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?= $page == 'add-book.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus me-2"></i>Add New Book</a>
         <a href="<?= $baseUrl ?>show-genres.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?= $page == 'show-genres.php' || $page == 'update-genre.php' ? 'active' : '' ?>"><i class="fas fa-project-diagram me-2"></i> Genres</a>
         <a href="<?= $baseUrl ?>genres/add-genre.php" class="list-group-item list-group-item-action bg-transparent second-text fw-bold <?= $page == 'add-genre.php' ? 'active' : '' ?>"><i class="fa-solid fa-plus me-2"></i>Add New Genre</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-shopping-cart me-2 <?= $page == '' ? 'active' : '' ?>"></i>Orders</a>
-        <a href="#" class="list-group-item list-group-item-action bg-transparent text-danger fw-bold"><i class="fas fa-power-off me-2"></i>Logout</a>
+        <!-- <a href="#" class="list-group-item list-group-item-action bg-transparent second-text fw-bold"><i class="fas fa-shopping-cart me-2 <?= $page == '' ? 'active' : '' ?>"></i>Orders</a> -->
+
     </div>
 </div>

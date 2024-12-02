@@ -4,7 +4,6 @@ session_start();
 
 $bookId = $_POST['bookId'];
 
-// Delete the item from the shopping_cart table
 $deleteQuery = "DELETE FROM shopping_cart WHERE book_id = $bookId";
 if (mysqli_query($connect, $deleteQuery)) {
     echo "Item removed from the shopping cart";

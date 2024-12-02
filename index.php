@@ -2,19 +2,19 @@
 include 'controllers/user-controller.php';
 $currentPage = 'home';
 $title = "Home Page";
-$sql = "SELECT * FROM book LIMIT 5";
-$result= mysqli_query($connect, $sql);
+
+$result = getLimitedBooksWithAuthors();
 $tbody = '';
-if (mysqli_num_rows($result)  > 0) {
+if ($result->num_rows > 0) {
     foreach ($result as $row) {
         $tbody .= "
-        <div class='col-lg-4 col-md-6 wow fadeInUp' data-wow-delay='0.1s'>
+        <div class='col-md-6 col-lg-3 wow fadeInUp mx-auto' data-wow-delay='0.1s'>
             <div class='store-item position-relative text-center'>
-                <img class='img-fluid' src='assets/img/{$row['image']}' alt='{$row['title']}'>
+                <img class='img-fluid w-100' src='assets/img/{$row['image']}' alt='{$row['title']}' style='height:400px;'>
                 <div class='p-4'>
                     <h4 class='mb-3'>{$row['title']}</h4>
                     <p>{$row['short_description']}</p>
-                    <h4 class='text-primary'>Author: {$row['author_first_name']} {$row['author_last_name']} </h4>
+                    <h4 class='text-primary'>Author: {$row['first_name']} {$row['last_name']} </h4>
                 </div>
                 <div class='store-overlay'>
                     <a href='details.php?id={$row['id']}' class='btn btn-primary rounded-pill py-2 px-4 m-2'>More Detail <i class='fa fa-arrow-right ms-2'></i></a>

@@ -4,9 +4,8 @@ $currentPage = 'show-users';
 $title = "Display Users";
 
 
-$id = $_SESSION[$userType];
-
-$sql = "SELECT * FROM users WHERE id != {$id}";
+$id = $_SESSION['admin'];
+$sql = " SELECT * FROM users WHERE id != {$id}";
 $res = mysqli_query($connect, $sql);
 
 $tbody = '';

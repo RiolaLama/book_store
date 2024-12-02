@@ -6,12 +6,6 @@ $title = 'Add New User';
 
 $formSubmitted = false;
 
-// $result1 = getAll('users');
-// $options = "";
-// while ($row = mysqli_fetch_assoc($result1)) {
-//         $options .= "<option value='{$row["id"]}'>{$row["name"]}</option>";
-// }
-
 ?>
 <?php include('../components/header.php'); ?>
 <div class="container-fluid">
@@ -36,7 +30,7 @@ $formSubmitted = false;
               <div class="status mt-5">
                 <h3 class="h6">Status</h3>
                 <select id="status" class="form-select" name="status">
-                  <option value="user" >User</option>
+                  <option value="user">User</option>
                   <option value="admin">Admin</option>
                 </select>
               </div>
@@ -53,15 +47,15 @@ $formSubmitted = false;
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label class="form-label">First name</label>
-                    <input type="text" class="form-control" name="first_name" >
-                  
+                    <input type="text" class="form-control" name="first_name">
+
                   </div>
                 </div>
                 <div class="col-lg-6">
                   <div class="mb-3">
                     <label class="form-label">Last name</label>
                     <input type="text" class="form-control" name="last_name">
-                
+
                   </div>
                 </div>
               </div>
@@ -80,7 +74,7 @@ $formSubmitted = false;
                   <div class="mb-3">
                     <label class="form-label">Date of Birth</label>
                     <input type="date" class="form-control" name="birth_date">
-                  
+
                   </div>
                 </div>
               </div>
@@ -132,20 +126,18 @@ $formSubmitted = false;
               <div class="row gutters mt-4">
                 <div class="col-12">
                   <div class="text-right">
-                  <input type="hidden" id="form-submitted" value="<?php echo $formSubmitted ? '1' : '0'; ?>">
+                    <input type="hidden" id="form-submitted" value="<?php echo $formSubmitted ? '1' : '0'; ?>">
                     <button type="submit" class="btn btn-success " name="add-user">Add User</button>
                     <a href="../show-users.php" class="btn btn-warning " type="button">Back</a>
                   </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </div>
     </form>
   </div>
-
 </div>
 
 <?php include('../components/footer.php') ?>

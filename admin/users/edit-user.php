@@ -3,29 +3,29 @@ include('../middlewares/admin-middleware.php');
 $currentPage = 'edit-user';
 $title = "Edit user";
 
-
-$sql = "SELECT * FROM users JOIN address_code  ON users.address_code_id = address_code.id WHERE users.id = {$_SESSION[$userType]}";
-$result = mysqli_query($connect, $sql);
-$user = mysqli_fetch_assoc($result);
-
-// $id = $_SESSION['admin'];
-// $status = 'admin';
-// $sql = "SELECT * FROM users WHERE user_type != '$status'";
-// $result = mysqli_query($connect, $sql);
-
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    // $result = getById('users', $id);
-    $sql = "SELECT *
-    FROM users 
-    JOIN address_code  ON users.address_code_id = address_code.id
-    WHERE users.id = {$id}";
-    $result = mysqli_query($connect, $sql);
-    if (mysqli_num_rows($result) == 1) {
-        $user = mysqli_fetch_assoc($result);
-        // $password = $user['password'];
+    $sql = "SELECT users.*, address_code.*
+            FROM users 
+            JOIN address_code ON users.address_code_id = address_code.id
+            WHERE users.id = ?";
+
+    $stmt = $connect->prepare($sql);
+    if ($stmt === false) {
+        die("Error preparing statement: " . $connect->error);
     }
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $user = $result->fetch_assoc();
+    } else {
+        echo "No user found!";
+    }
+    $stmt->close();
 }
+
 ?>
 <?php include('../components/header.php'); ?>
 <div class="container">

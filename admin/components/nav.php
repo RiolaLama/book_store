@@ -14,7 +14,7 @@
                     <i class="fas fa-user me-2"></i><?= $_SESSION['fullName'] ?>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" href="<?= $path ?>edit-user.php">My Profile</a></li>
+                    <li><a class="dropdown-item" href="<?= $path ?>edit-user.php?id=<?= $_SESSION['admin'] ?>">My Profile</a></li>
                     <li><a class="dropdown-item" href="<?= $baseUrl ?>../logout.php?logout">Logout</a></li>
                 </ul>
             </li>

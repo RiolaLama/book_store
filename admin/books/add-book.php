@@ -7,7 +7,7 @@ $title = 'Add New Book';
 $result1 = getAll('genres');
 $options = "";
 while ($row = mysqli_fetch_assoc($result1)) {
-        $options .= "<option value='{$row["id"]}'>{$row["name"]}</option>";
+    $options .= "<option value='{$row["id"]}'>{$row["name"]}</option>";
 }
 ?>
 <?php include('../components/header.php'); ?>
@@ -61,13 +61,17 @@ while ($row = mysqli_fetch_assoc($result1)) {
 
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label" for="author_name">Author's first name</label>
                                 <input id="author_name" class="form-control" type="text" name="author_first_name" required />
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label" for="author_lname">Author's last name</label>
                                 <input id="author_lname" class="form-control" type="text" name="author_last_name" required />
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label" for="author_email">Author's email</label>
+                                <input id="author_email" class="form-control" type="email" name="author_email" required />
                             </div>
                         </div>
                         <div class="row my-3">
@@ -76,7 +80,7 @@ while ($row = mysqli_fetch_assoc($result1)) {
                                 <textarea rows="4" id="description" class="form-control" name="short_description" required></textarea>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-4">
                                 <label class="form-label" for="publisher_name">Publisher's name</label>
                                 <input id="publisher_name" class="form-control" type="text" name="publisher_name" required />
@@ -89,7 +93,7 @@ while ($row = mysqli_fetch_assoc($result1)) {
                                 <label class="form-label" for="publisher_date">Publisher's date</label>
                                 <input id="publisher_date" class="form-control" type="date" name="publisher_date" required />
                             </div>
-                        </div>
+                        </div> -->
                         <div class="row my-5">
                             <div class="col-md-4 col-lg-3 col-xl-2 mb-3">
                                 <button type="submit" class="btn btn-success w-100" name="add-book">Insert Book</button>

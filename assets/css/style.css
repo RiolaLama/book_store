@@ -399,6 +399,49 @@
   width: 100%;
   height: 200px;
 }
+/* New book details */
+/* body {
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+.text-muted {
+  font-size: 1rem;
+}
+
+.alert {
+  font-size: 0.9rem;
+}
+
+.btn-light {
+  color: #555;
+  border: 1px solid #ddd;
+}
+
+.btn-light:hover {
+  background-color: #f8f9fa;
+}
+
+a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+p {
+  margin-bottom: 0.5rem;
+} */
 
 /* Swipper - book details */
 
@@ -584,7 +627,7 @@
 
 .image-card {
   width: 300px;
-  height: 250px;
+  height: 400px;
 }
 
 .image-card img {

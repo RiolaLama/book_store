@@ -10,14 +10,6 @@ if (isset($_SESSION["admin"])) {
 
 require_once "config/db_connect.php";
 
-function cleanInput($param)
-{
-    $clean = trim($param);
-    $clean = strip_tags($clean);
-    $clean = htmlspecialchars($clean);
-
-    return $clean;
-}
 
 $emailError = $email = $passError = "";
 if (isset($_POST["btn-login"])) {
@@ -31,12 +23,12 @@ if (isset($_POST["btn-login"])) {
         $emailError = "Please enter your email address.";
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error = true;
-        $emailError = "Please enter valid email address.";
+        $emailError = "Please enter a valid email address!";
     }
 
     if (empty($password)) {
         $error = true;
-        $passError = "Please enter your password.";
+        $passError = "Please enter your password!";
     }
 
     if (!$error) {
@@ -57,8 +49,6 @@ if (isset($_POST["btn-login"])) {
         }
     }
 }
-
-
 ?>
 
 <!DOCTYPE html>
@@ -103,18 +93,16 @@ if (isset($_POST["btn-login"])) {
 
                                     <!-- Email input -->
                                     <div class=" form-outline mb-4">
+                                        <label class="form-label ps-2" for="form3Example4">Email</label>
                                         <input type="text" class="form-control" id="exampleFormControlInput1" name="email" value="<?= $email ?>">
-
-                                        <label class="form-label" for="form3Example4">Email</label>
-                                        <span class=" text-danger"> <?= $emailError ?> </span>
+                                        <span class=" text-danger ps-2"> <?= $emailError ?> </span>
                                     </div>
 
                                     <!-- Password input -->
                                     <div class="form-outline mb-4">
+                                        <label class="form-label ps-2" for="form3Example4">Password</label>
                                         <input type="password" class="form-control" id="exampleFormControlInput1" name="password">
-
-                                        <label class="form-label" for="form3Example4">Password</label>
-                                        <span class="text-danger"> <?= $passError ?> </span>
+                                        <span class="text-danger ps-2"> <?= $passError ?> </span>
 
                                     </div>
 
